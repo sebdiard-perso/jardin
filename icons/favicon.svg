@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fond crème clair pour contraste avec l'emoji vert -->
+  <rect width="512" height="512" rx="64" fill="#f1f8e9"/>
+  <!-- Bordure verte pour délimiter l'icône -->
+  <rect x="8" y="8" width="496" height="496" rx="56" fill="none" stroke="#2e7d32" stroke-width="16"/>
+  <!-- Pousse verte bien visible sur fond clair -->
+  <text x="256" y="390" font-size="300" text-anchor="middle" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif">🌱</text>
+</svg>
