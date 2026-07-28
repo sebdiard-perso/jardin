@@ -2,7 +2,7 @@
   "name": "Mon Potager Sol Vivant",
   "short_name": "Potager MSV",
   "description": "Calendrier de pratiques pour nourrir le sol, augmenter la matière organique et économiser l'eau",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#1b5e20",
   "theme_color": "#2e7d32",

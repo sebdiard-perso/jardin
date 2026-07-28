@@ -1,10 +1,10 @@
-const CACHE_NAME = 'jardin-v13';
-const ASSETS = ['/', '/index.html', '/style.css', '/data.js', '/calendrier.js', '/planches.js', '/sources.js', '/app.js', '/manifest.json',
-  '/icons/favicon.svg', '/icons/icon-192.png', '/icons/icon-512.png',
-  '/legumes/tomate.js', '/legumes/carotte.js', '/legumes/laitue.js', '/legumes/courgette.js',
-  '/legumes/radis.js', '/legumes/haricot.js', '/legumes/poivron_aubergine.js', '/legumes/epinard.js',
-  '/legumes/petit_pois.js', '/legumes/alliacees.js', '/legumes/chou.js', '/legumes/cucurbitacees.js',
-  '/legumes/autres.js', '/legumes/pomme_de_terre.js'
+const CACHE_NAME = 'jardin-v14';
+const ASSETS = ['./', './index.html', './style.css', './data.js', './calendrier.js', './planches.js', './sources.js', './app.js', './manifest.json',
+  './icons/favicon.svg', './icons/icon-192.png', './icons/icon-512.png',
+  './legumes/tomate.js', './legumes/carotte.js', './legumes/laitue.js', './legumes/courgette.js',
+  './legumes/radis.js', './legumes/haricot.js', './legumes/poivron_aubergine.js', './legumes/epinard.js',
+  './legumes/petit_pois.js', './legumes/alliacees.js', './legumes/chou.js', './legumes/cucurbitacees.js',
+  './legumes/autres.js', './legumes/pomme_de_terre.js'
 ];
 
 self.addEventListener('install', e => {
