@@ -1,7 +1,7 @@
 {
-  "name": "Mon Jardin - Conseils Semis & Plantation",
-  "short_name": "Mon Jardin",
-  "description": "Conseils de jardinage : semis, plantation et récolte mois par mois",
+  "name": "Mon Potager Sol Vivant",
+  "short_name": "Potager MSV",
+  "description": "Calendrier de pratiques pour nourrir le sol, augmenter la matière organique et économiser l'eau",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1b5e20",

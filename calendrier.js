@@ -1,6 +1,7 @@
 let currentMonth = new Date().getMonth();
 let currentFilter = "all";
 let currentRegion = localStorage.getItem("jardin-region") || "oceanique";
+let currentDepartement = localStorage.getItem("jardin-departement") || "";
 
 function getActivities(plante, month) {
   const d = REGIONS[currentRegion].decalage;
@@ -14,25 +15,51 @@ function getActivities(plante, month) {
 
 function renderCalendrier() {
   const list = document.getElementById("plant-list");
-  const results = plantes
+  const cultureResults = plantes
     .map(p => ({ plante: p, activities: getActivities(p, currentMonth) }))
     .filter(({ activities }) => activities.length > 0)
     .filter(({ activities }) => currentFilter === "all" || activities.includes(currentFilter));
+  const d = REGIONS[currentRegion].decalage;
+  const solResults = TACHES_SOL_VIVANT
+    .filter(tache => shiftMonths(tache.mois, d).includes(currentMonth))
+    .filter(tache => currentFilter === "all" || tache.categorie === currentFilter);
 
-  if (!results.length) {
+  if (!solResults.length && !cultureResults.length) {
     list.innerHTML = '<div class="empty-state">🌙 Rien à faire ce mois-ci pour ce filtre</div>';
+    return;
+  }
+
+  const tachesSol = solResults.length ? `
+    <section class="calendar-section">
+      <h2 class="calendar-title">🌱 Gestes pour un sol vivant</h2>
+      ${currentFilter === "all" || currentFilter === "matiere-organique" ? `<aside class="soil-fact"><strong>💧 Repère MSV</strong><span>+1 % de matière organique = jusqu'à 273 L d'eau stockés par hectare.</span></aside>` : ""}
+      <div class="sol-task-list">
+        ${solResults.map(tache => `
+          <article class="sol-task-card ${tache.categorie}">
+            <div class="sol-task-icon">${tache.emoji}</div>
+            <div><h3>${tache.titre}</h3><span class="sol-category">${CATEGORIES_SOL_VIVANT[tache.categorie].label}</span><p>${tache.conseil}</p></div>
+          </article>
+        `).join("")}
+      </div>
+    </section>` : "";
+
+  if (currentFilter !== "all") {
+    list.innerHTML = tachesSol || '<div class="empty-state">🌙 Rien à faire ce mois-ci pour ce filtre</div>';
     return;
   }
 
   // Grouper par famille
   const parFamille = {};
-  for (const r of results) {
+  for (const r of cultureResults) {
     const f = r.plante.famille;
     if (!parFamille[f]) parFamille[f] = [];
     parFamille[f].push(r);
   }
 
-  list.innerHTML = Object.entries(parFamille).map(([famille, items]) => `
+  const cultures = cultureResults.length ? `
+    <section class="calendar-section">
+      <h2 class="calendar-title">🥕 Repères de culture</h2>
+      ${Object.entries(parFamille).map(([famille, items]) => `
     <div class="famille-group">
       <div class="famille-header">${famille}</div>
       ${items.map(({ plante, activities }) => `
@@ -47,7 +74,9 @@ function renderCalendrier() {
         </article>
       `).join("")}
     </div>
-  `).join("");
+  `).join("")}
+    </section>` : "";
+  list.innerHTML = tachesSol + cultures;
 }
 
 function initCalendrier() {
@@ -72,6 +101,22 @@ function initCalendrier() {
   regionSelect.addEventListener("change", e => {
     currentRegion = e.target.value;
     localStorage.setItem("jardin-region", currentRegion);
+    renderCalendrier();
+  });
+
+  const departementSelect = document.getElementById("departement");
+  departementSelect.innerHTML = '<option value="">— Choisir —</option>' +
+    DEPARTEMENTS.map(d => `<option value="${d.code}">${d.code} · ${d.nom}</option>`).join("");
+  departementSelect.value = currentDepartement;
+  departementSelect.addEventListener("change", e => {
+    currentDepartement = e.target.value;
+    localStorage.setItem("jardin-departement", currentDepartement);
+    const region = regionDuDepartement(currentDepartement);
+    if (region) {
+      currentRegion = region;
+      localStorage.setItem("jardin-region", currentRegion);
+      regionSelect.value = currentRegion;
+    }
     renderCalendrier();
   });
 

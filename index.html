@@ -8,17 +8,19 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <title>Mon Jardin</title>
+  <title>Mon Potager Sol Vivant</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>🌱 Mon Jardin</h1>
-    <p class="subtitle">Conseils semis & plantation</p>
+    <h1>🌱 Mon Potager Sol Vivant</h1>
+    <p class="subtitle">Nourrir le sol, augmenter la matière organique et économiser l'eau</p>
   </header>
 
   <div id="region-selector">
-    <label for="region">📍 Ma région :</label>
+    <label for="departement">📍 Mon département :</label>
+    <select id="departement"></select>
+    <label for="region" class="region-label">Zone :</label>
     <select id="region">
       <option value="oceanique">Océanique (Bretagne, Normandie, Aquitaine…)</option>
       <option value="continental">Continental (Alsace, Bourgogne, Île-de-France…)</option>
@@ -30,6 +32,7 @@
   <nav id="tabs">
     <button class="tab-btn active" data-tab="calendrier">📅 Calendrier</button>
     <button class="tab-btn" data-tab="planches">🌾 Mes Planches</button>
+    <button class="tab-btn" data-tab="sources">📚 Sources</button>
   </nav>
 
   <!-- TAB CALENDRIER -->
@@ -50,12 +53,19 @@
     </nav>
     <div id="filters">
       <button class="filter-btn active" data-filter="all">Tout</button>
-      <button class="filter-btn" data-filter="semis-interieur">🏠 Semis intérieur</button>
-      <button class="filter-btn" data-filter="semis-exterieur">🌤️ Semis extérieur</button>
-      <button class="filter-btn" data-filter="plantation">🌿 Plantation</button>
-      <button class="filter-btn" data-filter="recolte">🧺 Récolte</button>
+      <button class="filter-btn" data-filter="couverture">🍂 Couverture</button>
+      <button class="filter-btn" data-filter="matiere-organique">♻️ Matière organique</button>
+      <button class="filter-btn" data-filter="engrais-verts">🌾 Engrais verts</button>
+      <button class="filter-btn" data-filter="bachage">🟤 Bâchage</button>
+      <button class="filter-btn" data-filter="eau">💧 Eau</button>
+      <button class="filter-btn" data-filter="observation">🔎 Observation</button>
     </div>
     <main id="plant-list"></main>
+  </section>
+
+  <!-- TAB SOURCES -->
+  <section id="tab-sources" class="hidden">
+    <div id="sources-list"></div>
   </section>
 
   <!-- TAB PLANCHES -->
@@ -163,6 +173,7 @@
   <script src="data.js"></script>
   <script src="calendrier.js"></script>
   <script src="planches.js"></script>
+  <script src="sources.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

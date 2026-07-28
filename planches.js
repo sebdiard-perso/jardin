@@ -294,6 +294,46 @@ function renderAmendements(pl, noms, sol) {
   `).join("");
 }
 
+function getConseilsSolVivant(pl, noms, sol) {
+  const familles = [...new Set(noms.map(nom => findPlante(nom)?.famille).filter(Boolean))];
+  const eau = sol === "sableux"
+    ? "Sous un paillage épais, arroser au pied en petites quantités plus régulières : ce sol retient peu l'eau."
+    : sol === "argileux"
+      ? "Arroser lentement et vérifier que l'eau infiltre sans ruisseler. Ne pas intervenir quand le sol est collant."
+      : "Arroser au pied, de préférence le matin, puis vérifier sous le paillage avant de recommencer.";
+  const finCulture = pl.culturePrecedente === "engrais-vert"
+    ? "Après la fauche, laisser les racines et les tiges coupées en couverture avant la plantation."
+    : "Après récolte, couper les plantes au collet et laisser les racines dans le sol ; couvrir aussitôt la planche.";
+  const bachage = "Réserver une bâche opaque et réutilisable aux périodes sans culture, pour préparer une planche ou maîtriser les adventices. La poser sur un sol humide, la lester et surveiller limaces et humidité. Une bâche d'occultation doit être retirée avant toute culture.";
+  const bacheCulture = "Semis direct : retirer ou écarter la bâche sur le rang afin de semer dans une terre accessible. Plants repiqués : un paillage tissé ou un film de paillage peut rester en place si des ouvertures sont prévues pour chaque plant ; une bâche opaque d'occultation ne doit pas rester sous la culture.";
+  const brf = "Le BRF (bois raméal fragmenté) est un paillage carboné issu de jeunes rameaux. L'épandre en surface sur 2 à 5 cm, de préférence à l'automne ou sur une planche libre, sans l'enfouir. Pour les cultures exigeantes, associer un apport de compost mûr afin de soutenir leur démarrage.";
+  const brfIntensif = "Pour créer ou régénérer une planche au repos, une couche de 15 à 20 cm de BRF, voire plus, peut être déposée en surface. Humidifier si le matériau est sec et couvrir temporairement d'une bâche opaque bien lestée. Pour un semis direct, retirer la bâche puis ouvrir le BRF sur le rang ; pour des plants repiqués, la remplacer par un paillage tissé ou organique avec des ouvertures. Ne pas utiliser cette forte épaisseur au contact des jeunes plants.";
+  const apport = familles.some(famille => BESOINS_FAMILLE[famille]?.niveau === "gourmande")
+    ? "Les cultures gourmandes bénéficieront d'un apport de compost mûr en surface avant le paillage."
+    : "Un apport léger de compost mûr et le maintien du couvert suffisent généralement à entretenir la fertilité.";
+  const progressionMO = "Pour augmenter durablement le taux de matière organique, cumuler compost mûr, fumier composté, paillage carboné, résidus de culture laissés en surface et engrais verts. Répéter ces apports à chaque rotation, sans enfouissement profond.";
+  const racinesVivantes = "Chercher à garder cette planche couverte par des racines vivantes le plus longtemps possible : culture, engrais vert ou repousses. Les racines et leurs exsudats nourrissent les champignons et la vie du sol, moteur d'une matière organique stable.";
+  const equilibreCN = "Équilibrer les apports carbonés (paille, feuilles, BRF) et azotés (tontes, compost, fumier). Laissés en surface, ils se décomposent sans bloquer l'azote ; enfouis et trop carbonés, ils peuvent affamer temporairement les cultures.";
+  const suiviMO = "Noter les apports réalisés sur cette planche et, si possible, faire analyser le taux de matière organique. Viser une progression régulière saison après saison plutôt qu'un apport massif ponctuel.";
+
+  return [
+    { titre: "🍂 Couverture permanente", texte: "Ne laisser aucune terre nue : 5 à 8 cm de feuilles, broyat ou tontes séchées limitent l'évaporation et nourrissent le sol. Écarter le paillage des tiges.", },
+    { titre: "♻️ Matière organique", texte: apport },
+    { titre: "💧 Matière organique et eau", texte: "Repère MSV : +1 % de matière organique représente jusqu'à 273 L d'eau stockés par hectare. Chaque apport organique et chaque couverture contribuent à améliorer cette réserve." },
+    { titre: "🍁 Faire progresser le taux de MO", texte: progressionMO },
+    { titre: "🌱 Racines vivantes toute l'année", texte: racinesVivantes },
+    { titre: "⚖️ Équilibre carbone / azote", texte: equilibreCN },
+    { titre: "📊 Suivre le taux de MO", texte: suiviMO },
+    { titre: "🪵 BRF : un paillage carboné", texte: brf },
+    { titre: "🪵 BRF intensif sous bâche", texte: brfIntensif },
+    { titre: "🟤 Bâche et type de culture", texte: bacheCulture },
+    { titre: "💧 Eau", texte: eau },
+    { titre: "🪱 Sol peu perturbé", texte: "Éviter le bêchage et les passages sur la planche. Aérer seulement si nécessaire, sans retourner les horizons du sol." },
+    { titre: "🟤 Bâchage / occultation", texte: bachage },
+    { titre: "🌱 Entre deux cultures", texte: finCulture }
+  ];
+}
+
 function switchSubTab(idx, tab) {
   const card = document.getElementById(`planche-${idx}`);
   card.querySelectorAll(".sub-tab-btn").forEach(b => b.classList.toggle("active", b.dataset.sub === tab));
@@ -346,7 +386,10 @@ function renderPlanches() {
       <div class="sub-panel hidden" data-sub="assoc">
         ${(assoc.bonnes.length || assoc.mauvaises.length) ? `<div class="assoc-list">${assoc.bonnes.map(a => `<div class="assoc-good">✅ ${a}</div>`).join("")}${assoc.mauvaises.map(a => `<div class="assoc-bad">⚠️ ${a}</div>`).join("")}</div>` : '<p style="color:#999">Aucune</p>'}
         ${rots.length ? `<div class="rotation-info" style="margin-top:0.5rem">${rots.join("<br>")}</div>` : ""}</div>
-      <div class="sub-panel hidden" data-sub="sol">${renderAmendements(pl, noms, sol)}</div>
+      <div class="sub-panel hidden" data-sub="sol">
+        <div class="sol-vivant-list">${getConseilsSolVivant(pl, noms, sol).map(conseil => `<div class="sol-vivant-card"><h4>${conseil.titre}</h4><p>${conseil.texte}</p></div>`).join("")}</div>
+        <div class="sol-amendements"><h4>Adaptation à votre planche</h4>${renderAmendements(pl, noms, sol)}</div>
+      </div>
       <div class="sub-panel hidden" data-sub="alertes">
         ${nbAl ? `<div class="soleil-alerts">${aSoleil.map(a => a.alertes.map(m => `<div class="soleil-alert">${a.plante.emoji} ${a.plante.nom}: ${m}</div>`).join("")).join("")}${aSol.map(a => `<div class="soleil-alert">${a.plante.emoji} ${a.msg}</div>`).join("")}</div>` : '<p style="color:#2e7d32;font-weight:600">✅ Tout est compatible</p>'}
       </div>

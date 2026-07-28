@@ -6,7 +6,9 @@ document.getElementById("tabs").addEventListener("click", e => {
   const tab = e.target.dataset.tab;
   document.getElementById("tab-calendrier").classList.toggle("hidden", tab !== "calendrier");
   document.getElementById("tab-planches").classList.toggle("hidden", tab !== "planches");
+  document.getElementById("tab-sources").classList.toggle("hidden", tab !== "sources");
   if (tab === "planches") renderPlanches();
+  if (tab === "sources") renderSources();
 });
 
 // --- Sliders soleil ---
@@ -37,6 +39,7 @@ selectOrientation.addEventListener("change", () => {
 // --- Init ---
 initCalendrier();
 initPlanches();
+initSources();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/sw.js");
