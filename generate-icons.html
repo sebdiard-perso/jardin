@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Générer les icônes PWA</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f0f0f0; }
+    canvas { border: 1px solid #ccc; margin: 1em; border-radius: 8px; }
+    button { margin: 0.5em; padding: 0.6em 1.2em; font-size: 1em; cursor: pointer; background: #2e7d32; color: white; border: none; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Génération des icônes PWA 🌱</h1>
+  <p>Cliquez sur les boutons pour télécharger les PNG, puis remplacez les fichiers dans <code>icons/</code>.</p>
+
+  <div>
+    <canvas id="c192" width="192" height="192"></canvas>
+    <canvas id="c512" width="512" height="512"></canvas>
+  </div>
+  <div>
+    <button onclick="download('c192', 'icon-192.png')">⬇️ Télécharger icon-192.png</button>
+    <button onclick="download('c512', 'icon-512.png')">⬇️ Télécharger icon-512.png</button>
+  </div>
+
+  <script>
+    function drawIcon(canvas) {
+      const size = canvas.width;
+      const ctx = canvas.getContext('2d');
+      const radius = size * 0.12;
+
+      // Fond blanc cassé
+      ctx.fillStyle = '#f1f8e9';
+      roundRect(ctx, 0, 0, size, size, radius);
+      ctx.fill();
+
+      // Bordure verte foncée
+      ctx.strokeStyle = '#2e7d32';
+      ctx.lineWidth = size * 0.03;
+      roundRect(ctx, ctx.lineWidth / 2, ctx.lineWidth / 2, size - ctx.lineWidth, size - ctx.lineWidth, radius);
+      ctx.stroke();
+
+      // Emoji 🌱
+      ctx.font = `${size * 0.6}px "Apple Color Emoji", "Segoe UI Emoji", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🌱', size / 2, size / 2 + size * 0.04);
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function download(canvasId, filename) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    drawIcon(document.getElementById('c192'));
+    drawIcon(document.getElementById('c512'));
+  </script>
+</body>
+</html>
