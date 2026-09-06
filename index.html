@@ -15,8 +15,13 @@
 </head>
 <body>
   <header>
-    <h1>🌱 Mon Potager Sol Vivant</h1>
-    <p class="subtitle">Nourrir le sol, augmenter la matière organique et économiser l'eau</p>
+    <div class="app-title">
+      <img src="./icons/icon-192.png" width="52" height="52" alt="Pousse verte, icône de Mon Potager">
+      <div>
+        <h1>Mon Potager Sol Vivant</h1>
+        <p class="subtitle">Nourrir le sol, augmenter la matière organique et économiser l'eau</p>
+      </div>
+    </div>
   </header>
 
   <div id="region-selector">
@@ -31,11 +36,70 @@
     </select>
   </div>
 
-  <nav id="tabs">
+  <nav id="tabs" aria-label="Sections de l'application">
     <button class="tab-btn active" data-tab="calendrier">📅 Calendrier</button>
     <button class="tab-btn" data-tab="planches">🌾 Mes Planches</button>
+    <button class="tab-btn" data-tab="jardin">📐 Mon Jardin</button>
     <button class="tab-btn" data-tab="sources">📚 Sources</button>
   </nav>
+
+  <!-- TAB JARDIN -->
+  <section id="tab-jardin" class="hidden">
+    <div class="jardin-page">
+      <div class="jardin-intro">
+        <div>
+          <h2>📐 Dessiner mon jardin à l'échelle</h2>
+          <p>Chaque petit carreau mesure 25 cm. Dessinez, déplacez et redimensionnez les zones avec la règle en mètres.</p>
+        </div>
+      </div>
+
+      <div class="jardin-controls" aria-label="Réglages du plan">
+        <div class="jardin-control-group">
+          <strong>Terrain</strong>
+          <label for="jardin-largeur">Largeur (m)</label>
+          <input id="jardin-largeur" type="number" min="1" max="50" step="0.25" value="10" inputmode="decimal">
+          <label for="jardin-longueur">Longueur (m)</label>
+          <input id="jardin-longueur" type="number" min="1" max="50" step="0.25" value="8" inputmode="decimal">
+          <button id="btn-appliquer-jardin" class="btn-small">Appliquer</button>
+        </div>
+        <div class="jardin-control-group">
+          <strong>Ajouter une planche existante</strong>
+          <select id="jardin-planche-select" aria-label="Planche à ajouter"></select>
+          <button id="btn-ajouter-planche-jardin" class="btn-small">＋ Ajouter au plan</button>
+        </div>
+        <div class="jardin-control-group jardin-tools">
+          <strong>Outils</strong>
+          <button id="btn-dessiner-zone" class="btn-small" aria-pressed="false">✏️ Dessiner une zone</button>
+          <div class="jardin-zoom" aria-label="Zoom du plan">
+            <button id="btn-jardin-zoom-moins" class="btn-icon" aria-label="Réduire le plan">−</button>
+            <span>Zoom</span>
+            <button id="btn-jardin-zoom-plus" class="btn-icon" aria-label="Agrandir le plan">＋</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="jardin-zone-editor" class="jardin-zone-editor hidden">
+        <strong>Zone sélectionnée</strong>
+        <label for="jardin-zone-nom">Nom</label>
+        <input id="jardin-zone-nom" type="text" maxlength="60">
+        <label for="jardin-zone-largeur">Largeur (m)</label>
+        <input id="jardin-zone-largeur" type="number" min="0.5" step="0.01" inputmode="decimal">
+        <label for="jardin-zone-longueur">Longueur (m)</label>
+        <input id="jardin-zone-longueur" type="number" min="0.5" step="0.01" inputmode="decimal">
+        <label for="jardin-zone-couleur">Couleur</label>
+        <input id="jardin-zone-couleur" type="color" value="#66bb6a">
+        <button id="btn-appliquer-zone" class="btn-small">Enregistrer</button>
+        <button id="btn-supprimer-zone" class="btn-small btn-danger">Supprimer</button>
+      </div>
+
+      <p id="jardin-status" class="jardin-status" aria-live="polite">Touchez « Dessiner une zone », puis glissez sur le quadrillage. Touchez une zone pour la déplacer.</p>
+      <div class="jardin-canvas-scroll" aria-label="Plan du jardin défilable">
+        <svg id="jardin-canvas" class="jardin-canvas" tabindex="0" aria-label="Plan interactif du jardin à l'échelle"></svg>
+      </div>
+      <p class="jardin-help">Astuce : la poignée blanche redimensionne la zone sélectionnée. Au clavier, les flèches déplacent de 25 cm et Maj + flèche de 1 m.</p>
+    </div>
+    <script src="jardin.js"></script>
+  </section>
 
   <!-- TAB CALENDRIER -->
   <section id="tab-calendrier">

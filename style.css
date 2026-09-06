@@ -813,3 +813,184 @@ header h1 { font-size: 1.6rem; }
   padding: 0.3rem;
 }
 .entretien-actuel .entretien-mois-label { color: #1b5e20; }
+
+/* En-tête et navigation mobile */
+.app-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: left;
+}
+.app-title img {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+#tabs {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#tabs::-webkit-scrollbar { display: none; }
+.tab-btn { min-width: max-content; }
+
+/* Plan global du jardin */
+.jardin-page {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0.75rem;
+}
+.jardin-intro {
+  background: #fff;
+  border-left: 4px solid #2e7d32;
+  border-radius: 0.9rem;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.jardin-intro h2 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+.jardin-intro p, .jardin-help, .jardin-status {
+  color: #556b55;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.jardin-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.jardin-control-group, .jardin-zone-editor {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  background: #fff;
+  border: 1px solid #c8e6c9;
+  border-radius: 0.8rem;
+  padding: 0.65rem;
+}
+.jardin-control-group strong, .jardin-zone-editor strong {
+  flex-basis: 100%;
+  font-size: 0.82rem;
+}
+.jardin-control-group label, .jardin-zone-editor label {
+  color: #486248;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.jardin-control-group input[type="number"],
+.jardin-zone-editor input[type="number"] {
+  width: 4.5rem;
+}
+.jardin-control-group input,
+.jardin-control-group select,
+.jardin-zone-editor input {
+  min-height: 2.25rem;
+  border: 1.5px solid #a5d6a7;
+  border-radius: 0.55rem;
+  padding: 0.35rem 0.45rem;
+  color: #1b5e20;
+  background: #fff;
+}
+.jardin-control-group select { flex: 1; min-width: 9rem; }
+.jardin-zone-editor { margin-bottom: 0.65rem; }
+.jardin-zone-editor input[type="text"] { flex: 1; min-width: 8rem; }
+.jardin-zone-editor input[type="color"] { width: 2.75rem; padding: 0.2rem; }
+.btn-small, .btn-icon {
+  min-height: 2.25rem;
+  border: 1.5px solid #2e7d32;
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.65rem;
+  background: #fff;
+  color: #1b5e20;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-small:disabled { opacity: 0.5; cursor: default; }
+.btn-small.active, .btn-small:active, .btn-icon:active {
+  background: #2e7d32;
+  color: #fff;
+}
+.btn-danger { border-color: #c62828; color: #c62828; }
+.jardin-tools { align-content: center; }
+.jardin-zoom { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; }
+.btn-icon { width: 2.25rem; padding: 0; font-size: 1.1rem; }
+.jardin-status {
+  min-height: 1.5rem;
+  margin: 0.3rem 0;
+  font-weight: 600;
+}
+.jardin-canvas-scroll {
+  width: 100%;
+  max-height: 70vh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #a5d6a7;
+  border-radius: 0.8rem;
+  background: #fff;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.08);
+  -webkit-overflow-scrolling: touch;
+}
+.jardin-canvas {
+  display: block;
+  max-width: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.jardin-canvas:focus { outline: 3px solid rgba(46,125,50,0.3); outline-offset: -3px; }
+.garden-canvas-bg { fill: #fafafa; }
+.garden-ruler-bg { fill: #fff8e1; }
+.garden-ruler-tick { stroke: #5d4037; stroke-width: 1; pointer-events: none; }
+.garden-ruler-label { fill: #5d4037; font-size: 9px; font-weight: 700; pointer-events: none; }
+.garden-ground { fill: #f5f1e6; stroke: #795548; stroke-width: 2; }
+.grid-minor { stroke: #cfd8c3; stroke-width: 0.6; pointer-events: none; }
+.grid-major { stroke: #9aaa8d; stroke-width: 1.1; pointer-events: none; }
+.garden-item { cursor: grab; touch-action: none; }
+.garden-item:active { cursor: grabbing; }
+.garden-zone-rect { stroke: rgba(27,94,32,0.65); stroke-width: 1.5; }
+.garden-item.selected .garden-zone-rect { stroke: #0d47a1; stroke-width: 3; }
+.garden-item.preview { pointer-events: none; opacity: 0.72; }
+.garden-item.preview .garden-zone-rect { stroke-dasharray: 6 4; }
+.garden-zone-name, .garden-zone-dims {
+  fill: #17351a;
+  font-size: 11px;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: rgba(255,255,255,0.8);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.garden-zone-dims { font-size: 9px; font-weight: 600; }
+.garden-resize-hit {
+  fill: transparent;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+.garden-resize-handle {
+  fill: #fff;
+  stroke: #0d47a1;
+  stroke-width: 2;
+  pointer-events: none;
+}
+.garden-empty-label { fill: #789078; font-size: 12px; font-weight: 600; pointer-events: none; }
+.jardin-canvas.draw-mode { cursor: crosshair; touch-action: none; }
+.jardin-help { margin-top: 0.45rem; }
+
+@media (max-width: 600px) {
+  header { padding: 0.8rem 0.65rem; }
+  .app-title { justify-content: flex-start; }
+  .app-title img { width: 44px; height: 44px; }
+  header h1 { font-size: 1.2rem; }
+  .subtitle { font-size: 0.72rem; }
+  .tab-btn { flex: 0 0 auto; padding: 0.65rem 0.7rem; font-size: 0.8rem; }
+  .jardin-page { padding: 0.5rem; }
+  .jardin-controls { grid-template-columns: 1fr; }
+  .jardin-control-group, .jardin-zone-editor { align-items: flex-end; }
+  .jardin-zone-editor strong { width: 100%; }
+  .jardin-canvas-scroll { max-height: 62vh; }
+}

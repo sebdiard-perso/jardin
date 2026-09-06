@@ -1,13 +1,17 @@
 // --- Tabs ---
+const APP_TABS = ["calendrier", "planches", "jardin", "sources"];
+
 document.getElementById("tabs").addEventListener("click", e => {
-  if (!e.target.classList.contains("tab-btn")) return;
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-  e.target.classList.add("active");
-  const tab = e.target.dataset.tab;
-  document.getElementById("tab-calendrier").classList.toggle("hidden", tab !== "calendrier");
-  document.getElementById("tab-planches").classList.toggle("hidden", tab !== "planches");
-  document.getElementById("tab-sources").classList.toggle("hidden", tab !== "sources");
+  const button = e.target.closest(".tab-btn");
+  if (!button) return;
+  document.querySelectorAll(".tab-btn").forEach(tabButton => tabButton.classList.remove("active"));
+  button.classList.add("active");
+  const tab = button.dataset.tab;
+  APP_TABS.forEach(tabName => {
+    document.getElementById(`tab-${tabName}`).classList.toggle("hidden", tabName !== tab);
+  });
   if (tab === "planches") renderPlanches();
+  if (tab === "jardin") renderJardin();
   if (tab === "sources") renderSources();
 });
 
@@ -40,7 +44,11 @@ selectOrientation.addEventListener("change", () => {
 initCalendrier();
 initPlanches();
 initSources();
+initJardin();
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js");
+  const swUrl = new URL("./sw.js", document.currentScript.src);
+  navigator.serviceWorker.register(swUrl).catch(error => {
+    console.warn("Service worker non disponible :", error);
+  });
 }
