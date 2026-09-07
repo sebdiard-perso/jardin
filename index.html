@@ -49,7 +49,7 @@
       <div class="jardin-intro">
         <div>
           <h2>📐 Dessiner mon jardin à l'échelle</h2>
-          <p>Chaque petit carreau mesure 25 cm. Dessinez, déplacez et redimensionnez les zones avec la règle en mètres.</p>
+          <p>Le quadrillage de 25 cm sert de repère, mais les zones peuvent être déplacées librement, mises en biais ou tracées à main levée.</p>
         </div>
       </div>
 
@@ -68,8 +68,9 @@
           <button id="btn-ajouter-planche-jardin" class="btn-small">＋ Ajouter au plan</button>
         </div>
         <div class="jardin-control-group jardin-tools">
-          <strong>Outils</strong>
-          <button id="btn-dessiner-zone" class="btn-small" aria-pressed="false">✏️ Dessiner une zone</button>
+          <strong>Outils de dessin</strong>
+          <button id="btn-dessiner-zone" class="btn-small" aria-pressed="false">▭ Rectangle</button>
+          <button id="btn-dessiner-libre" class="btn-small" aria-pressed="false">✍️ Forme libre</button>
           <div class="jardin-zoom" aria-label="Zoom du plan">
             <button id="btn-jardin-zoom-moins" class="btn-icon" aria-label="Réduire le plan">−</button>
             <span>Zoom</span>
@@ -79,24 +80,31 @@
       </div>
 
       <div id="jardin-zone-editor" class="jardin-zone-editor hidden">
-        <strong>Zone sélectionnée</strong>
+        <strong>Zone sélectionnée <span id="jardin-zone-type" class="jardin-zone-type"></span></strong>
         <label for="jardin-zone-nom">Nom</label>
         <input id="jardin-zone-nom" type="text" maxlength="60">
-        <label for="jardin-zone-largeur">Largeur (m)</label>
-        <input id="jardin-zone-largeur" type="number" min="0.5" step="0.01" inputmode="decimal">
-        <label for="jardin-zone-longueur">Longueur (m)</label>
-        <input id="jardin-zone-longueur" type="number" min="0.5" step="0.01" inputmode="decimal">
+        <label for="jardin-zone-largeur">Emprise largeur (m)</label>
+        <input id="jardin-zone-largeur" type="number" min="0.1" step="0.01" inputmode="decimal">
+        <label for="jardin-zone-longueur">Emprise longueur (m)</label>
+        <input id="jardin-zone-longueur" type="number" min="0.1" step="0.01" inputmode="decimal">
+        <label for="jardin-zone-rotation">Angle</label>
+        <div class="jardin-angle-control">
+          <button id="btn-zone-rotation-moins" class="btn-icon" aria-label="Tourner de 5 degrés à gauche">↶</button>
+          <input id="jardin-zone-rotation" type="number" min="0" max="359" step="1" inputmode="numeric" aria-label="Angle en degrés">
+          <span>°</span>
+          <button id="btn-zone-rotation-plus" class="btn-icon" aria-label="Tourner de 5 degrés à droite">↷</button>
+        </div>
         <label for="jardin-zone-couleur">Couleur</label>
         <input id="jardin-zone-couleur" type="color" value="#66bb6a">
         <button id="btn-appliquer-zone" class="btn-small">Enregistrer</button>
         <button id="btn-supprimer-zone" class="btn-small btn-danger">Supprimer</button>
       </div>
 
-      <p id="jardin-status" class="jardin-status" aria-live="polite">Touchez « Dessiner une zone », puis glissez sur le quadrillage. Touchez une zone pour la déplacer.</p>
+      <p id="jardin-status" class="jardin-status" aria-live="polite">Choisissez Rectangle ou Forme libre, puis dessinez sur le terrain. Touchez ensuite une zone pour la modifier.</p>
       <div class="jardin-canvas-scroll" aria-label="Plan du jardin défilable">
         <svg id="jardin-canvas" class="jardin-canvas" tabindex="0" aria-label="Plan interactif du jardin à l'échelle"></svg>
       </div>
-      <p class="jardin-help">Astuce : la poignée blanche redimensionne la zone sélectionnée. Au clavier, les flèches déplacent de 25 cm et Maj + flèche de 1 m.</p>
+      <p class="jardin-help">Poignée ronde : tourner librement · poignée carrée : redimensionner · glisser la zone : déplacer. Une forme libre se dessine en suivant son contour au doigt.</p>
     </div>
     <script src="jardin.js"></script>
   </section>

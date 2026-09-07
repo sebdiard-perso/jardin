@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jardin-v16';
+const CACHE_NAME = 'jardin-v17';
 const ASSETS = ['./', './index.html', './style.css', './data.js', './calendrier.js', './planches.js', './jardin.js', './sources.js', './app.js', './manifest.json',
   './icons/favicon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',
   './legumes/tomate.js', './legumes/carotte.js', './legumes/laitue.js', './legumes/courgette.js',
